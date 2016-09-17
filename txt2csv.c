@@ -1,41 +1,32 @@
-#define NO_FILE 99
-#define TOEIC 0
 #include "txt2csv.h"
 
-int main(int argc, char *argv[]){
-    //printf("test\n");
-    FILE *fin;
-    FILE *fout;
-    int convertMode = TOEIC;
-    //int convertMode = NO_FILE;
+bool openFile(int convertMode, FILE **fin, FILE **fout){
     switch(convertMode){
-        case TOEIC:
-            fin = fopen("TOEIC.txt", "r");
-            fout = fopen("TOEIC.csv", "w");
+        case T1:
+            *fin = fopen("T1.txt", "r");
+            *fout = fopen("T1.csv", "w");
+            return true;
             break;
-        //case NO_FILE:
+        case NO_FILE:
         default:
-            printf("No file!");
-            exit(1);
+            printf("No file!\n");
+            return false;
             break;
     }
-    if(!fin){//Check file was opened
-        printf("File open error!");
-        exit(1);
-    }
-    char tmpString[100];
-    while(fgets(tmpString, 100, fin) != NULL){
-        //TODO fprintf(fout,)
-        printf("%s%d\n", tmpString, strlen(tmpString));
+}
+bool writeFile(int convertMode, FILE **fin, FILE **fout){
+    char tmpS[100];
+    while(fgets(tmpS, 100, *fin) != NULL){
+        printf("%s%d\n", tmpS, strlen(tmpS));
         switch(convertMode){
-            case TOEIC:
-                //for(int i = 0; i < strlen(tmpString); i++){
-                    
-                //}
-                ;
+            case T1:
+                break;
+            case NO_FILE:
+            default:
+                printf("No file!\n");
+                return false;
+                break;
         }
     }
-    fclose(fin);
-    fclose(fout);
-    return 0;
+    return true;
 }
